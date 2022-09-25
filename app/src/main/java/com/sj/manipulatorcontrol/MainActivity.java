@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private BluetoothAdapter mBTAdapter;
     public UUID mDeviceUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    public static final String DEVICE_EXTRA = "com.pam.tc.szklarnia.SOCKET";
-    public static final String DEVICE_UUID = "com.pam.tc.szklarnia.uuid";
-    private static final String DEVICE_LIST = "com.pam.tc.szklarnia.devicelist";
-    private static final String DEVICE_LIST_SELECTED = "com.pam.tc.szklarnia.devicelistselected";
+    public static final String DEVICE_EXTRA = "com.sj.manipulatorcontrol.SOCKET";
+    public static final String DEVICE_UUID = "com.sj.manipulatorcontrol.uuid";
+    private static final String DEVICE_LIST = "com.sj.manipulatorcontrol.devicelist";
+    private static final String DEVICE_LIST_SELECTED = "com.sj.manipulatorcontrol.devicelistselected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

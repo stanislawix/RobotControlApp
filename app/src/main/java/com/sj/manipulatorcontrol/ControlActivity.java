@@ -12,11 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class ControlActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class ControlActivity extends AppCompatActivity {
     private Button c2Button1, c2Button2, c2Button3, c2Button4;
     private Button c3Button1, c3Button2, c3Button3, c3Button4;
     private Button c4Button1, c4Button2, c4Button3, c4Button4;
+    private Button homingButton;
 
     private ProgressDialog progressDialog;
 
@@ -52,8 +54,8 @@ public class ControlActivity extends AppCompatActivity {
         katC0 = (TextView) findViewById(R.id.katC0); //powiazania pol tekstowych w pliku xml z kodem java
         katC1 = (TextView) findViewById(R.id.katC1);
         katC2 = (TextView) findViewById(R.id.katC2);
-//        katC3 = (TextView) findViewById(R.id.katC3);
-//        katC4 = (TextView) findViewById(R.id.katC4);
+        katC3 = (TextView) findViewById(R.id.katC3);
+        katC4 = (TextView) findViewById(R.id.katC4);
 
         c0Button1 = (Button) findViewById(R.id.c0Button1);
         c0Button2 = (Button) findViewById(R.id.c0Button2);
@@ -67,137 +69,228 @@ public class ControlActivity extends AppCompatActivity {
         c2Button2 = (Button) findViewById(R.id.c2Button2);
         c2Button3 = (Button) findViewById(R.id.c2Button3);
         c2Button4 = (Button) findViewById(R.id.c2Button4);
-//        c3Button1 = (Button) findViewById(R.id.c3Button1);
-//        c3Button2 = (Button) findViewById(R.id.c3Button2);
-//        c3Button3 = (Button) findViewById(R.id.c3Button3);
-//        c3Button4 = (Button) findViewById(R.id.c3Button4);
-//        c4Button1 = (Button) findViewById(R.id.c4Button1);
-//        c4Button2 = (Button) findViewById(R.id.c4Button2);
-//        c4Button3 = (Button) findViewById(R.id.c4Button3);
-//        c4Button4 = (Button) findViewById(R.id.c4Button4);
+        c3Button1 = (Button) findViewById(R.id.c3Button1);
+        c3Button2 = (Button) findViewById(R.id.c3Button2);
+        c3Button3 = (Button) findViewById(R.id.c3Button3);
+        c3Button4 = (Button) findViewById(R.id.c3Button4);
+        c4Button1 = (Button) findViewById(R.id.c4Button1);
+        c4Button2 = (Button) findViewById(R.id.c4Button2);
+        c4Button3 = (Button) findViewById(R.id.c4Button3);
+        c4Button4 = (Button) findViewById(R.id.c4Button4);
+        homingButton = (Button) findViewById(R.id.homingButton);
 
+        // metoda wysylajaca komende obrotu podstawy manipulatora o 5° przeciwnie do wskazowek zegara po wcisnieciu danego przycisku
         c0Button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                sendCommandThroughBluetooth("S0-5;");
             }
         });
 
-    }
-
-    private class WriteOutput implements Runnable {
-
-        private boolean bStop = false;
-        private Thread t;
-
-        public WriteOutput() {
-            t = new Thread(this, "Output Thread");
-            t.start();
-        }
-
-        public boolean isRunning() { return t.isAlive(); }
-
-        @Override
-        public void run() {
-            OutputStream outputStream;
-
-            try {
-                outputStream = mBTSocket.getOutputStream(); //otwarcie strumienia danych z bluetooth
-                while (!bStop) {
-                    byte[] buffer = new byte[256];
-                    if (inputStream.available() > 0) {
-                        inputStream.read(buffer); //odczyt ze strumienia Bluetooth do bufora
-                        int i = 0;
-                        for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
-                        }
-                        final String strInput = new String(buffer, 0, i);
-
-                        String[] informacje = strInput.split(";"); //parsowanie danych z bufora
-                        if (informacje.length != 5) { //sprawdzenie czy wiadomosc z Arduino jest kompletna
-                            msg("Odebrano niepoprawną wiadomość z Arduino!");
-                        } else {
-                            runOnUiThread(new Runnable() { //wywolanie funkcji do modyfikacji widokiem aktywnosci z innego watku (tego watku)
-                                @Override
-                                public void run() { //aktualizacja danych wyswietlanych w aktywnosci
-                                    katC0.setText(informacje[0] + "°");
-                                    katC1.setText(informacje[1] + "°");
-                                    katC2.setText(informacje[2] + "°");
-//                                    katC3.setText(informacje[3] + "°");
-//                                    katC4.setText(informacje[4] + "°");
-                                }
-                            });
-                        }
-                    }
-                    Thread.sleep(500);
-                }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        c0Button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S0-1;");
             }
+        });
 
-        }
+        c0Button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S01;");
+            }
+        });
 
-        public void stop() {
-            bStop = true;
-        }
+        c0Button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S05;");
+            }
+        });
 
+        c1Button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S1-5;");
+            }
+        });
+
+        c1Button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S1-1;");
+            }
+        });
+
+        c1Button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S11;");
+            }
+        });
+
+        c1Button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S15;");
+            }
+        });
+
+        c2Button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S2-5;");
+            }
+        });
+
+        c2Button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S2-1;");
+            }
+        });
+
+        c2Button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S21;");
+            }
+        });
+
+        c2Button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S25;");
+            }
+        });
+
+        c3Button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S3-5;");
+            }
+        });
+
+        c3Button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S3-1;");
+            }
+        });
+
+        c3Button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S31;");
+            }
+        });
+
+        c3Button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S35;");
+            }
+        });
+
+        c4Button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S4-5;");
+            }
+        });
+
+        c4Button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S4-1;");
+            }
+        });
+
+        c4Button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S41;");
+            }
+        });
+
+        c4Button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("S45;");
+            }
+        });
+
+        homingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCommandThroughBluetooth("bz");
+            }
+        });
     }
 
-    private class ReadInput implements Runnable { //klasa do odbierania informacji od Arduino
+    private void sendCommandThroughBluetooth(String command) {
+        try {
+            mBTSocket.getOutputStream().write(command.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        private boolean bStop = false;
-        private Thread t;
+    private class ReadInput implements Runnable { // klasa do odbierania informacji od Arduino przez Bluetooth
 
+        private boolean bStop = false; // zmienna informująca o poleceniu zatrzymania komunikacji
+        private Thread t; // wątek odpowiedzialny za obsługę odbierania danych
+
+        // konstruktor obiektu tworzący nowy wątek do odbierania danych
         public ReadInput() {
             t = new Thread(this, "Input Thread");
             t.start();
         }
 
+        // metoda informująca, czy wątek działa
         public boolean isRunning() {
             return t.isAlive();
         }
 
+        // metoda odpowiedzialna za odbiór, parsowanie i wyświetlanie danych o kątach manipulatora, odebranych przez BT
         @Override
         public void run() {
-            InputStream inputStream;
+            InputStream inputStream; // deklaracja wejściowego strumienia danych z Bluetooth
 
             try {
-                inputStream = mBTSocket.getInputStream(); //otwarcie strumienia danych z bluetooth
+                inputStream = mBTSocket.getInputStream(); // otwarcie strumienia danych z bluetooth
                 while (!bStop) {
                     byte[] buffer = new byte[256];
                     if (inputStream.available() > 0) {
-                        inputStream.read(buffer); //odczyt ze strumienia Bluetooth do bufora
+                        inputStream.read(buffer); // odczyt ze strumienia Bluetooth do bufora wiadomości
                         int i = 0;
                         for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
                         }
                         final String strInput = new String(buffer, 0, i);
 
-                        String[] informacje = strInput.split(";"); //parsowanie danych z bufora
-                        if (informacje.length != 5) { //sprawdzenie czy wiadomosc z Arduino jest kompletna
-                            msg("Odebrano niepoprawną wiadomość z Arduino!");
+                        String[] informacje = strInput.split(";"); // parsowanie danych z bufora
+                        if (informacje.length != 5) { // sprawdzenie czy wiadomosc z Arduino jest kompletna
+                            msg("Odebrano niepoprawną wiadomość z Arduino!"); // alert o błędnej wiadomości z Arduino
                         } else {
-                            runOnUiThread(new Runnable() { //wywolanie funkcji do modyfikacji widokiem aktywnosci z innego watku (tego watku)
+                            runOnUiThread(new Runnable() { // wywołanie funkcji do modyfikacji widoku aktywnosci z innego watku (tego watku)
                                 @Override
-                                public void run() { //aktualizacja danych wyswietlanych w aktywnosci
+                                public void run() { // aktualizacja kątów manipulatora wyświetlanych w aplikacji
                                     katC0.setText(informacje[0] + "°");
                                     katC1.setText(informacje[1] + "°");
                                     katC2.setText(informacje[2] + "°");
-//                                    katC3.setText(informacje[3] + "°");
-//                                    katC4.setText(informacje[4] + "°");
+                                    katC3.setText(informacje[3] + "°");
+                                    katC4.setText(informacje[4] + "°");
                                 }
                             });
                         }
                     }
                     Thread.sleep(500);
                 }
+
+                // obsługa wyjątków
             } catch (IOException e) {
-            // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -205,7 +298,7 @@ public class ControlActivity extends AppCompatActivity {
 
         public void stop() {
             bStop = true;
-        }
+        } // metoda do zatrzymywania wątku
 
     }
 
