@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ControlActivity extends AppCompatActivity {
@@ -30,15 +31,15 @@ public class ControlActivity extends AppCompatActivity {
     private boolean mIsUserInitiatedDisconnect = false;
     private boolean mIsBluetoothConnected = false;
 
-    private TextView katC0, katC1, katC2, katC3, katC4;
+    private TextView katC0, katC1;
     private Button c0Button1, c0Button2, c0Button3, c0Button4;
     private Button c1Button1, c1Button2, c1Button3, c1Button4;
-    private Button c2Button1, c2Button2, c2Button3, c2Button4;
-    private Button c3Button1, c3Button2, c3Button3, c3Button4;
-    private Button c4Button1, c4Button2, c4Button3, c4Button4;
-    private Button homingButton;
+    private Button skretZeroingButton;
+    private JoystickView joystick;
 
     private ProgressDialog progressDialog;
+
+    private CommandFilter commandFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,186 +52,122 @@ public class ControlActivity extends AppCompatActivity {
         mDevice = b.getParcelable(MainActivity.DEVICE_EXTRA); //urzadzenie BT z ktorym sie laczymy
         mDeviceUUID = UUID.fromString(b.getString(MainActivity.DEVICE_UUID)); //identyfkator urzadzenia
 
-        katC0 = (TextView) findViewById(R.id.katC0); //powiazania pol tekstowych w pliku xml z kodem java
-        katC1 = (TextView) findViewById(R.id.katC1);
-        katC2 = (TextView) findViewById(R.id.katC2);
-        katC3 = (TextView) findViewById(R.id.katC3);
-        katC4 = (TextView) findViewById(R.id.katC4);
+        katC0 = (TextView) findViewById(R.id.katSkretuTextView); //powiazania pol tekstowych w pliku xml z kodem java
+        katC1 = (TextView) findViewById(R.id.velocityTextView);
 
-        c0Button1 = (Button) findViewById(R.id.c0Button1);
-        c0Button2 = (Button) findViewById(R.id.c0Button2);
-        c0Button3 = (Button) findViewById(R.id.c0Button3);
-        c0Button4 = (Button) findViewById(R.id.c0Button4);
-        c1Button1 = (Button) findViewById(R.id.c1Button1);
-        c1Button2 = (Button) findViewById(R.id.c1Button2);
-        c1Button3 = (Button) findViewById(R.id.c1Button3);
-        c1Button4 = (Button) findViewById(R.id.c1Button4);
-        c2Button1 = (Button) findViewById(R.id.c2Button1);
-        c2Button2 = (Button) findViewById(R.id.c2Button2);
-        c2Button3 = (Button) findViewById(R.id.c2Button3);
-        c2Button4 = (Button) findViewById(R.id.c2Button4);
-        c3Button1 = (Button) findViewById(R.id.c3Button1);
-        c3Button2 = (Button) findViewById(R.id.c3Button2);
-        c3Button3 = (Button) findViewById(R.id.c3Button3);
-        c3Button4 = (Button) findViewById(R.id.c3Button4);
-        c4Button1 = (Button) findViewById(R.id.c4Button1);
-        c4Button2 = (Button) findViewById(R.id.c4Button2);
-        c4Button3 = (Button) findViewById(R.id.c4Button3);
-        c4Button4 = (Button) findViewById(R.id.c4Button4);
-        homingButton = (Button) findViewById(R.id.homingButton);
+        c0Button1 = (Button) findViewById(R.id.katSkretuButton1);
+        c0Button2 = (Button) findViewById(R.id.katSkretuButton2);
+        c0Button3 = (Button) findViewById(R.id.katSkretuButton3);
+        c0Button4 = (Button) findViewById(R.id.katSkretuButton4);
+        c1Button1 = (Button) findViewById(R.id.velocityButton1);
+        c1Button2 = (Button) findViewById(R.id.velocityButton2);
+        c1Button3 = (Button) findViewById(R.id.velocityButton3);
+        c1Button4 = (Button) findViewById(R.id.velocityButton4);
+        skretZeroingButton = (Button) findViewById(R.id.skretZeroingButton);
+
+        joystick = (JoystickView) findViewById(R.id.joystickView);
+        joystick.setFixedCenter(true);
+
+        commandFilter = new CommandFilter(400);
 
         // metoda wysylajaca komende obrotu podstawy manipulatora o 5° przeciwnie do wskazowek zegara po wcisnieciu danego przycisku
         c0Button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S0-5;");
+                sendCommandThroughBluetooth("S0-45;");
             }
         });
 
         c0Button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S0-1;");
+                sendCommandThroughBluetooth("S0-15;");
             }
         });
 
         c0Button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S01;");
+                sendCommandThroughBluetooth("S015;");
             }
         });
 
         c0Button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S05;");
+                sendCommandThroughBluetooth("S045;");
             }
         });
 
         c1Button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S1-5;");
+                sendCommandThroughBluetooth("V20;");
             }
         });
 
         c1Button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S1-1;");
+                sendCommandThroughBluetooth("V50;");
             }
         });
 
         c1Button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S11;");
+                sendCommandThroughBluetooth("V75;");
             }
         });
 
         c1Button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S15;");
+                sendCommandThroughBluetooth("V100;");
             }
         });
 
-        c2Button1.setOnClickListener(new View.OnClickListener() {
+        skretZeroingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommandThroughBluetooth("S2-5;");
+                sendCommandThroughBluetooth("S000");
             }
         });
 
-        c2Button2.setOnClickListener(new View.OnClickListener() {
+        joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S2-1;");
+            public void onMove(int angle, int strength) {
+//                double skret = (strength * Math.cos(Math.toRadians(angle)));
+                int skret = (int) (strength * Math.cos(Math.toRadians(angle)));
+//                double predkosc = (strength * Math.sin(Math.toRadians(angle)));
+                int predkosc = (int) (strength * Math.sin(Math.toRadians(angle)));
+                skret = (skret / 10) * 10;
+                predkosc = (predkosc / 10) * 10;
+                if(skret >= 100) skret = 99;
+                if(skret <= -100) skret = -99;
+                if(predkosc >= 100) predkosc = 99;
+                if(predkosc <= -100) predkosc = -99;;
+                System.out.print(String.format(Locale.ENGLISH, "{\"spd\": %d, \"dir\": %d}!", predkosc, skret));
+                if(commandFilter.isRecommendedToSendCommand(String.format(Locale.ENGLISH, "{\"spd\":%d,\"dir\":%d}!", predkosc, skret))) {
+                    sendCommandThroughBluetooth(commandFilter.sendCommand());
+                    System.out.println(" -- SENT!");
+                } else
+                    System.out.println("");
             }
-        });
-
-        c2Button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S21;");
-            }
-        });
-
-        c2Button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S25;");
-            }
-        });
-
-        c3Button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S3-5;");
-            }
-        });
-
-        c3Button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S3-1;");
-            }
-        });
-
-        c3Button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S31;");
-            }
-        });
-
-        c3Button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S35;");
-            }
-        });
-
-        c4Button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S4-5;");
-            }
-        });
-
-        c4Button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S4-1;");
-            }
-        });
-
-        c4Button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S41;");
-            }
-        });
-
-        c4Button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S45;");
-            }
-        });
-
-        homingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("bz");
-            }
-        });
+        },100);
     }
 
     private void sendCommandThroughBluetooth(String command) {
         try {
             mBTSocket.getOutputStream().write(command.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendCommandThroughBluetooth(Komenda komenda) {
+        try {
+            mBTSocket.getOutputStream().write(komenda.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -277,9 +214,9 @@ public class ControlActivity extends AppCompatActivity {
                                 public void run() { // aktualizacja kątów manipulatora wyświetlanych w aplikacji
                                     katC0.setText(informacje[0] + "°");
                                     katC1.setText(informacje[1] + "°");
-                                    katC2.setText(informacje[2] + "°");
-                                    katC3.setText(informacje[3] + "°");
-                                    katC4.setText(informacje[4] + "°");
+//                                    katC2.setText(informacje[2] + "°");
+//                                    katC3.setText(informacje[3] + "°");
+//                                    katC4.setText(informacje[4] + "°");
                                 }
                             });
                         }
@@ -393,7 +330,7 @@ public class ControlActivity extends AppCompatActivity {
             } else {
                 msg("Połączono z Arduino!");
                 mIsBluetoothConnected = true;
-                mReadThread = new ReadInput(); // Kick off input reader
+//                mReadThread = new ReadInput(); // Kick off input reader
             }
 
             progressDialog.dismiss();

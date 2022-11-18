@@ -7,287 +7,104 @@
     tools:context=".ControlActivity">
 
     <Button
-        android:id="@+id/c4Button1"
-        android:layout_width="58dp"
+        android:id="@+id/velocityButton3"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="75%"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
+        app:layout_constraintEnd_toStartOf="@+id/velocityButton4"
+        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
+
+    <TextView
+        android:id="@+id/naglowekVelocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Prędkość"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/katSkretuNaglowek"
+        app:layout_constraintStart_toStartOf="@+id/katSkretuNaglowek"
+        app:layout_constraintTop_toBottomOf="@+id/skretZeroingButton" />
+
+    <Button
+        android:id="@+id/velocityButton1"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="-5°"
+        android:text="20%"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC4" />
+        app:layout_constraintTop_toBottomOf="@+id/naglowekVelocity" />
 
     <Button
-        android:id="@+id/c4Button2"
-        android:layout_width="58dp"
+        android:id="@+id/velocityButton2"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="-1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c4Button1"
-        app:layout_constraintStart_toEndOf="@+id/c4Button1"
-        app:layout_constraintTop_toTopOf="@+id/c4Button1" />
+        android:text="50%"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
+        app:layout_constraintStart_toEndOf="@+id/velocityButton1"
+        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
+
+    <Button
+        android:id="@+id/velocityButton4"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="100%"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
 
     <TextView
-        android:id="@+id/katC4"
+        android:id="@+id/velocityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="61°"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="50%"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/c4Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c4Button3"
-        app:layout_constraintStart_toEndOf="@+id/c4Button2"
-        app:layout_constraintTop_toTopOf="@+id/c4Button1" />
-
-    <TextView
-        android:id="@+id/naglowekC4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Człon 4"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/naglowekC0"
-        app:layout_constraintStart_toStartOf="@+id/naglowekC0"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC3" />
+        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
+        app:layout_constraintEnd_toStartOf="@+id/velocityButton3"
+        app:layout_constraintStart_toEndOf="@+id/velocityButton2"
+        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
 
     <Button
-        android:id="@+id/c4Button4"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="+5°"
-        app:layout_constraintBottom_toBottomOf="@+id/c4Button1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/c4Button1" />
-
-    <Button
-        android:id="@+id/c4Button3"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="+1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c4Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c4Button4"
-        app:layout_constraintTop_toTopOf="@+id/c4Button1" />
-
-    <Button
-        android:id="@+id/c3Button2"
+        android:id="@+id/katSkretuButton2"
         android:layout_width="58dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="-1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c3Button1"
-        app:layout_constraintStart_toEndOf="@+id/c3Button1"
-        app:layout_constraintTop_toTopOf="@+id/c3Button1" />
-
-    <TextView
-        android:id="@+id/katC3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="45°"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/c3Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c3Button3"
-        app:layout_constraintStart_toEndOf="@+id/c3Button2"
-        app:layout_constraintTop_toTopOf="@+id/c3Button1" />
-
-    <TextView
-        android:id="@+id/naglowekC3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Człon 3"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/naglowekC0"
-        app:layout_constraintStart_toStartOf="@+id/naglowekC0"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC2" />
+        android:text="15°L"
+        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
+        app:layout_constraintStart_toEndOf="@+id/katSkretuButton1"
+        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
 
     <Button
-        android:id="@+id/c3Button4"
+        android:id="@+id/katSkretuButton3"
+        android:layout_width="58dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="15°R"
+        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
+        app:layout_constraintEnd_toStartOf="@+id/katSkretuButton4"
+        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
+
+    <Button
+        android:id="@+id/katSkretuButton4"
         android:layout_width="58dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:text="+5°"
-        app:layout_constraintBottom_toBottomOf="@+id/c3Button1"
+        android:text="45°R"
+        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/c3Button1" />
-
-    <Button
-        android:id="@+id/c3Button3"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="+1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c3Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c3Button4"
-        app:layout_constraintTop_toTopOf="@+id/c3Button1" />
-
-    <Button
-        android:id="@+id/c3Button1"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="-5°"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC3" />
-
-    <Button
-        android:id="@+id/c2Button1"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="-5°"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC2" />
-
-    <TextView
-        android:id="@+id/katC2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="98°"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/c2Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c2Button3"
-        app:layout_constraintStart_toEndOf="@+id/c2Button2"
-        app:layout_constraintTop_toTopOf="@+id/c2Button1" />
-
-    <Button
-        android:id="@+id/c2Button4"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="+5°"
-        app:layout_constraintBottom_toBottomOf="@+id/c2Button1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/c2Button1" />
-
-    <TextView
-        android:id="@+id/naglowekC2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Człon 2"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/naglowekC0"
-        app:layout_constraintStart_toStartOf="@+id/naglowekC0"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC1" />
-
-    <Button
-        android:id="@+id/c2Button3"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="+1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c2Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c2Button4"
-        app:layout_constraintTop_toTopOf="@+id/c2Button1" />
-
-    <Button
-        android:id="@+id/c2Button2"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="-1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c2Button1"
-        app:layout_constraintStart_toEndOf="@+id/c2Button1"
-        app:layout_constraintTop_toTopOf="@+id/c2Button1" />
-
-    <Button
-        android:id="@+id/c1Button3"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="+1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c1Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c1Button4"
-        app:layout_constraintTop_toTopOf="@+id/c1Button1" />
-
-    <TextView
-        android:id="@+id/naglowekC1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Człon 1"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/naglowekC0"
-        app:layout_constraintStart_toStartOf="@+id/naglowekC0"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC0" />
-
-    <Button
-        android:id="@+id/c1Button1"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="-5°"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC1" />
-
-    <Button
-        android:id="@+id/c1Button2"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="-1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c1Button1"
-        app:layout_constraintStart_toEndOf="@+id/c1Button1"
-        app:layout_constraintTop_toTopOf="@+id/c1Button1" />
-
-    <Button
-        android:id="@+id/c1Button4"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="+5°"
-        app:layout_constraintBottom_toBottomOf="@+id/c1Button1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/c1Button1" />
-
-    <TextView
-        android:id="@+id/katC1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="110°"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/c1Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c1Button3"
-        app:layout_constraintStart_toEndOf="@+id/c1Button2"
-        app:layout_constraintTop_toTopOf="@+id/c1Button1" />
-
-    <Button
-        android:id="@+id/c0Button2"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="-1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c0Button1"
-        app:layout_constraintStart_toEndOf="@+id/c0Button1"
-        app:layout_constraintTop_toTopOf="@+id/c0Button1" />
-
-    <Button
-        android:id="@+id/c0Button3"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="+1°"
-        app:layout_constraintBottom_toBottomOf="@+id/c0Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c0Button4"
-        app:layout_constraintTop_toTopOf="@+id/c0Button1" />
-
-    <Button
-        android:id="@+id/c0Button4"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="+5°"
-        app:layout_constraintBottom_toBottomOf="@+id/c0Button1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/c0Button1" />
+        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
 
     <TextView
         android:id="@+id/nazwaAktywnosci"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="MANIPULATOR 5DOF"
+        android:text="STEROWANIE ROBOTEM"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -304,44 +121,54 @@
         app:layout_constraintTop_toBottomOf="@+id/nazwaAktywnosci" />
 
     <TextView
-        android:id="@+id/naglowekC0"
+        android:id="@+id/katSkretuNaglowek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Podstawa"
+        android:layout_marginTop="8dp"
+        android:text="Skręt"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusPolaczenia" />
 
     <Button
-        android:id="@+id/c0Button1"
+        android:id="@+id/katSkretuButton1"
         android:layout_width="58dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="-5°"
+        android:text="45°L"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekC0" />
+        app:layout_constraintTop_toBottomOf="@+id/katSkretuNaglowek" />
 
     <TextView
-        android:id="@+id/katC0"
+        android:id="@+id/katSkretuTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="37°"
+        android:text="0°"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/c0Button1"
-        app:layout_constraintEnd_toStartOf="@+id/c0Button3"
-        app:layout_constraintStart_toEndOf="@+id/c0Button2"
-        app:layout_constraintTop_toTopOf="@+id/c0Button1" />
+        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
+        app:layout_constraintEnd_toStartOf="@+id/katSkretuButton3"
+        app:layout_constraintStart_toEndOf="@+id/katSkretuButton2"
+        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
 
     <Button
-        android:id="@+id/homingButton"
+        android:id="@+id/skretZeroingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Bazowanie"
+        android:layout_marginTop="16dp"
+        android:text="Zeruj skręt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/katC4" />
+        app:layout_constraintTop_toBottomOf="@+id/katSkretuTextView" />
+
+    <com.sj.manipulatorcontrol.JoystickView
+        android:id="@+id/joystickView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/velocityTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
