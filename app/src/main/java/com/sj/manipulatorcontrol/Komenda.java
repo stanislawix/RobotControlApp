@@ -6,6 +6,11 @@ public class Komenda {
     private final int speed;
     private final int direction;
 
+    public Komenda() {
+        this.speed = 0;
+        this.direction = 0;
+    }
+
     public Komenda(int speed, int direction) {
         this.speed = speed;
         this.direction = direction;

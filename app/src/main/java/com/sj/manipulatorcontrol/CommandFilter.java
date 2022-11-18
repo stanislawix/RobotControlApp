@@ -1,32 +1,39 @@
 package com.sj.manipulatorcontrol;
 
 public class CommandFilter {
-    private final int INTERVAL_BETWEEN_COMMANDS;
-    private String recentCommand = "";
+    public final long INTERVAL_BETWEEN_COMMANDS_MS;
+    public final Komenda zeroCommand = new Komenda();
+
+    private Komenda recentCommand = new Komenda();
     private long lastCommandSentTime = 0;
     private long timeSinceLastSentCommand = 0;
+    private long lastZeroCommandSentTime = 0;
+    private long timeSinceLastSentZeroCommand = 0;
 
     public CommandFilter() {
-        this(200);
+        this(100L);
     }
 
-    public CommandFilter(int interval_between_commands) {
-        this.INTERVAL_BETWEEN_COMMANDS = interval_between_commands;
+    public CommandFilter(long interval_between_commands) {
+        this.INTERVAL_BETWEEN_COMMANDS_MS = interval_between_commands;
     }
 
-    boolean isRecommendedToSendCommand(String command) {
+    boolean isRecommendedToSendCommand(Komenda command) {
         timeSinceLastSentCommand = System.currentTimeMillis() - lastCommandSentTime;
+        timeSinceLastSentZeroCommand = System.currentTimeMillis() - lastZeroCommandSentTime;
         recentCommand = command;
-        if(timeSinceLastSentCommand > INTERVAL_BETWEEN_COMMANDS && !recentCommand.equals("{\"spd\":0,\"dir\":0}")) {
-            lastCommandSentTime = (int) System.currentTimeMillis();
+        if(timeSinceLastSentCommand > INTERVAL_BETWEEN_COMMANDS_MS && !recentCommand.equals(zeroCommand)) {
             return true;
-        } else {
+        } else if(timeSinceLastSentZeroCommand > INTERVAL_BETWEEN_COMMANDS_MS && recentCommand.equals(zeroCommand)) {
+            lastZeroCommandSentTime = System.currentTimeMillis();
+            System.out.println("Zero command sent");
+            return true;
+        } else
             return false;
-        }
     }
 
     String sendCommand() {
         lastCommandSentTime = System.currentTimeMillis();
-        return recentCommand;
+        return recentCommand.toString();
     }
 }

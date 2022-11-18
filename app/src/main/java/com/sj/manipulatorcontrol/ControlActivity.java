@@ -40,6 +40,7 @@ public class ControlActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private CommandFilter commandFilter;
+    private Komenda komenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class ControlActivity extends AppCompatActivity {
         joystick = (JoystickView) findViewById(R.id.joystickView);
         joystick.setFixedCenter(true);
 
-        commandFilter = new CommandFilter(400);
+        commandFilter = new CommandFilter(300L);
 
         // metoda wysylajaca komende obrotu podstawy manipulatora o 5° przeciwnie do wskazowek zegara po wcisnieciu danego przycisku
         c0Button1.setOnClickListener(new View.OnClickListener() {
@@ -147,27 +148,20 @@ public class ControlActivity extends AppCompatActivity {
                 if(skret <= -100) skret = -99;
                 if(predkosc >= 100) predkosc = 99;
                 if(predkosc <= -100) predkosc = -99;;
-                System.out.print(String.format(Locale.ENGLISH, "{\"spd\": %d, \"dir\": %d}!", predkosc, skret));
-                if(commandFilter.isRecommendedToSendCommand(String.format(Locale.ENGLISH, "{\"spd\":%d,\"dir\":%d}!", predkosc, skret))) {
+                komenda = new Komenda(predkosc, skret);
+                System.out.print(komenda);
+                if(commandFilter.isRecommendedToSendCommand(komenda)) {
                     sendCommandThroughBluetooth(commandFilter.sendCommand());
                     System.out.println(" -- SENT!");
                 } else
                     System.out.println("");
             }
-        },100);
+        },25);
     }
 
     private void sendCommandThroughBluetooth(String command) {
         try {
             mBTSocket.getOutputStream().write(command.getBytes(StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendCommandThroughBluetooth(Komenda komenda) {
-        try {
-            mBTSocket.getOutputStream().write(komenda.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
