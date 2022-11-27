@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import java.util.UUID;
 
 public class ControlActivity extends AppCompatActivity {
@@ -31,10 +28,7 @@ public class ControlActivity extends AppCompatActivity {
     private boolean mIsUserInitiatedDisconnect = false;
     private boolean mIsBluetoothConnected = false;
 
-    private TextView katC0, katC1;
-    private Button c0Button1, c0Button2, c0Button3, c0Button4;
-    private Button c1Button1, c1Button2, c1Button3, c1Button4;
-    private Button skretZeroingButton;
+    private TextView distanceFront, distanceRight, distanceRear, distanceLeft;
     private JoystickView joystick;
 
     private ProgressDialog progressDialog;
@@ -53,94 +47,20 @@ public class ControlActivity extends AppCompatActivity {
         mDevice = b.getParcelable(MainActivity.DEVICE_EXTRA); //urzadzenie BT z ktorym sie laczymy
         mDeviceUUID = UUID.fromString(b.getString(MainActivity.DEVICE_UUID)); //identyfkator urzadzenia
 
-        katC0 = (TextView) findViewById(R.id.katSkretuTextView); //powiazania pol tekstowych w pliku xml z kodem java
-        katC1 = (TextView) findViewById(R.id.velocityTextView);
-
-        c0Button1 = (Button) findViewById(R.id.katSkretuButton1);
-        c0Button2 = (Button) findViewById(R.id.katSkretuButton2);
-        c0Button3 = (Button) findViewById(R.id.katSkretuButton3);
-        c0Button4 = (Button) findViewById(R.id.katSkretuButton4);
-        c1Button1 = (Button) findViewById(R.id.velocityButton1);
-        c1Button2 = (Button) findViewById(R.id.velocityButton2);
-        c1Button3 = (Button) findViewById(R.id.velocityButton3);
-        c1Button4 = (Button) findViewById(R.id.velocityButton4);
-        skretZeroingButton = (Button) findViewById(R.id.skretZeroingButton);
+        distanceFront = (TextView) findViewById(R.id.frontSensorDistanceTextView); //powiazania pol tekstowych w pliku xml z kodem java
+        distanceRight = (TextView) findViewById(R.id.rightSensorDistanceTextView);
+        distanceRear = (TextView) findViewById(R.id.rearSensorDistanceTextView);
+        distanceLeft = (TextView) findViewById(R.id.leftSensorDistanceTextView);
 
         joystick = (JoystickView) findViewById(R.id.joystickView);
         joystick.setFixedCenter(true);
 
         commandFilter = new CommandFilter(300L);
 
-        // metoda wysylajaca komende obrotu podstawy manipulatora o 5° przeciwnie do wskazowek zegara po wcisnieciu danego przycisku
-        c0Button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S0-45;");
-            }
-        });
-
-        c0Button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S0-15;");
-            }
-        });
-
-        c0Button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S015;");
-            }
-        });
-
-        c0Button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S045;");
-            }
-        });
-
-        c1Button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("V20;");
-            }
-        });
-
-        c1Button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("V50;");
-            }
-        });
-
-        c1Button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("V75;");
-            }
-        });
-
-        c1Button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("V100;");
-            }
-        });
-
-        skretZeroingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCommandThroughBluetooth("S000");
-            }
-        });
-
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-//                double skret = (strength * Math.cos(Math.toRadians(angle)));
                 int skret = (int) (strength * Math.cos(Math.toRadians(angle)));
-//                double predkosc = (strength * Math.sin(Math.toRadians(angle)));
                 int predkosc = (int) (strength * Math.sin(Math.toRadians(angle)));
                 skret = (skret / 10) * 10;
                 predkosc = (predkosc / 10) * 10;
@@ -206,8 +126,8 @@ public class ControlActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() { // wywołanie funkcji do modyfikacji widoku aktywnosci z innego watku (tego watku)
                                 @Override
                                 public void run() { // aktualizacja kątów manipulatora wyświetlanych w aplikacji
-                                    katC0.setText(informacje[0] + "°");
-                                    katC1.setText(informacje[1] + "°");
+                                    distanceFront.setText(informacje[0] + "°");
+                                    distanceRight.setText(informacje[1] + "°");
 //                                    katC2.setText(informacje[2] + "°");
 //                                    katC3.setText(informacje[3] + "°");
 //                                    katC4.setText(informacje[4] + "°");

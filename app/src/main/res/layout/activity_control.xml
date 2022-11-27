@@ -6,99 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ControlActivity">
 
-    <Button
-        android:id="@+id/velocityButton3"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="75%"
-        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
-        app:layout_constraintEnd_toStartOf="@+id/velocityButton4"
-        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
-
-    <TextView
-        android:id="@+id/naglowekVelocity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Prędkość"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/katSkretuNaglowek"
-        app:layout_constraintStart_toStartOf="@+id/katSkretuNaglowek"
-        app:layout_constraintTop_toBottomOf="@+id/skretZeroingButton" />
-
-    <Button
-        android:id="@+id/velocityButton1"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="20%"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naglowekVelocity" />
-
-    <Button
-        android:id="@+id/velocityButton2"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="50%"
-        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
-        app:layout_constraintStart_toEndOf="@+id/velocityButton1"
-        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
-
-    <Button
-        android:id="@+id/velocityButton4"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="100%"
-        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
-
-    <TextView
-        android:id="@+id/velocityTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="50%"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/velocityButton1"
-        app:layout_constraintEnd_toStartOf="@+id/velocityButton3"
-        app:layout_constraintStart_toEndOf="@+id/velocityButton2"
-        app:layout_constraintTop_toTopOf="@+id/velocityButton1" />
-
-    <Button
-        android:id="@+id/katSkretuButton2"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="15°L"
-        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
-        app:layout_constraintStart_toEndOf="@+id/katSkretuButton1"
-        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
-
-    <Button
-        android:id="@+id/katSkretuButton3"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="15°R"
-        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
-        app:layout_constraintEnd_toStartOf="@+id/katSkretuButton4"
-        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
-
-    <Button
-        android:id="@+id/katSkretuButton4"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="45°R"
-        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
-
     <TextView
         android:id="@+id/nazwaAktywnosci"
         android:layout_width="wrap_content"
@@ -120,55 +27,53 @@
         app:layout_constraintStart_toStartOf="@+id/nazwaAktywnosci"
         app:layout_constraintTop_toBottomOf="@+id/nazwaAktywnosci" />
 
-    <TextView
-        android:id="@+id/katSkretuNaglowek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Skręt"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusPolaczenia" />
-
-    <Button
-        android:id="@+id/katSkretuButton1"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="45°L"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/katSkretuNaglowek" />
-
-    <TextView
-        android:id="@+id/katSkretuTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0°"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/katSkretuButton1"
-        app:layout_constraintEnd_toStartOf="@+id/katSkretuButton3"
-        app:layout_constraintStart_toEndOf="@+id/katSkretuButton2"
-        app:layout_constraintTop_toTopOf="@+id/katSkretuButton1" />
-
-    <Button
-        android:id="@+id/skretZeroingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Zeruj skręt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/katSkretuTextView" />
-
     <com.sj.manipulatorcontrol.JoystickView
         android:id="@+id/joystickView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/velocityTextView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        />
+    <TextView
+        android:id="@+id/frontSensorDistanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:text="0 cm"
+        app:layout_constraintBottom_toTopOf="@+id/joystickView"
+        app:layout_constraintEnd_toEndOf="@+id/joystickView"
+        app:layout_constraintStart_toStartOf="@+id/joystickView" />
+
+    <TextView
+        android:id="@+id/rightSensorDistanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="0 cm"
+        app:layout_constraintBottom_toBottomOf="@+id/joystickView"
+        app:layout_constraintEnd_toEndOf="@+id/joystickView"
+        app:layout_constraintTop_toTopOf="@+id/joystickView"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/rearSensorDistanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:text="0 cm"
+        app:layout_constraintEnd_toEndOf="@+id/joystickView"
+        app:layout_constraintStart_toStartOf="@+id/joystickView"
+        app:layout_constraintTop_toBottomOf="@+id/joystickView" />
+
+    <TextView
+        android:id="@+id/leftSensorDistanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="0 cm"
+        app:layout_constraintBottom_toBottomOf="@+id/joystickView"
+        app:layout_constraintStart_toStartOf="@+id/joystickView"
+        app:layout_constraintTop_toTopOf="@+id/joystickView"
+        app:layout_constraintVertical_bias="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
