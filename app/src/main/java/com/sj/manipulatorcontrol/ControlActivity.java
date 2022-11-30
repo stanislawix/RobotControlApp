@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,19 +65,20 @@ public class ControlActivity extends AppCompatActivity {
                 int predkosc = (int) (strength * Math.sin(Math.toRadians(angle)));
                 skret = (skret / 10) * 10;
                 predkosc = (predkosc / 10) * 10;
-                if(skret >= 100) skret = 99;
-                if(skret <= -100) skret = -99;
-                if(predkosc >= 100) predkosc = 99;
-                if(predkosc <= -100) predkosc = -99;;
+                if (skret >= 100) skret = 99;
+                if (skret <= -100) skret = -99;
+                if (predkosc >= 100) predkosc = 99;
+                if (predkosc <= -100) predkosc = -99;
+                ;
                 komenda = new Komenda(predkosc, skret);
                 System.out.print(komenda);
-                if(commandFilter.isRecommendedToSendCommand(komenda)) {
+                if (commandFilter.isRecommendedToSendCommand(komenda)) {
                     sendCommandThroughBluetooth(commandFilter.sendCommand());
                     System.out.println(" -- SENT!");
                 } else
                     System.out.println("");
             }
-        },25);
+        }, 25);
     }
 
     private void sendCommandThroughBluetooth(String command) {
@@ -120,22 +122,18 @@ public class ControlActivity extends AppCompatActivity {
                         final String strInput = new String(buffer, 0, i);
 
                         String[] informacje = strInput.split(";"); // parsowanie danych z bufora
-                        if (informacje.length != 5) { // sprawdzenie czy wiadomosc z Arduino jest kompletna
-                            msg("Odebrano niepoprawną wiadomość z Arduino!"); // alert o błędnej wiadomości z Arduino
-                        } else {
-                            runOnUiThread(new Runnable() { // wywołanie funkcji do modyfikacji widoku aktywnosci z innego watku (tego watku)
-                                @Override
-                                public void run() { // aktualizacja kątów manipulatora wyświetlanych w aplikacji
-                                    distanceFront.setText(informacje[0] + "°");
-                                    distanceRight.setText(informacje[1] + "°");
-//                                    katC2.setText(informacje[2] + "°");
-//                                    katC3.setText(informacje[3] + "°");
-//                                    katC4.setText(informacje[4] + "°");
-                                }
-                            });
-                        }
+
+                        runOnUiThread(new Runnable() { // wywołanie funkcji do modyfikacji widoku aktywnosci z innego watku (tego watku)
+                            @Override
+                            public void run() { // aktualizacja kątów manipulatora wyświetlanych w aplikacji
+                                distanceFront.setText(informacje[0] + "cm");
+                                distanceRight.setText(informacje[1] + "cm");
+                                distanceRear.setText(informacje[2] + "cm");
+                                distanceLeft.setText(informacje[3] + "cm");
+                            }
+                        });
                     }
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 }
 
                 // obsługa wyjątków
@@ -172,7 +170,7 @@ public class ControlActivity extends AppCompatActivity {
             try {
                 mBTSocket.close();
             } catch (IOException e) {
-            // TODO Auto-generated catch block
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -244,7 +242,7 @@ public class ControlActivity extends AppCompatActivity {
             } else {
                 msg("Połączono z Arduino!");
                 mIsBluetoothConnected = true;
-//                mReadThread = new ReadInput(); // Kick off input reader
+                mReadThread = new ReadInput(); // Kick off input reader
             }
 
             progressDialog.dismiss();
