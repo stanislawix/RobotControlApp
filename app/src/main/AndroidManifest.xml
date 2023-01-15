@@ -23,7 +23,7 @@
             android:name="com.sj.manipulatorcontrol.ControlActivity"
             android:exported="false" />
         <activity
-            android:name="com.sj.manipulatorcontrol.MainActivity"
+            android:name="com.sj.manipulatorcontrol.ConnectActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

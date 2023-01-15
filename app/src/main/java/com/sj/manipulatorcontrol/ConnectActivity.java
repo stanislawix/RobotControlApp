@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class ConnectActivity extends AppCompatActivity {
 
     private Button search;
     private Button connect;
@@ -102,11 +102,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                BluetoothDevice device = ((MyAdapter) (listView.getAdapter())).getSelectedItem();
-                Intent intent = new Intent(getApplicationContext(), ControlActivity.class);
-                intent.putExtra(DEVICE_EXTRA, device);
-                intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
-                startActivity(intent); // uruchamianie aktywnosci szklarni z przekazaniem informacji o urzadzeniu BT z ktorym ma sie polaczyc (z Arduino)
+                if(((MyAdapter) (listView.getAdapter())).getSelectedIndex() < 0) {
+                    Toast.makeText(getApplicationContext(), "Najpierw wybierz sparowane urządzenie z listy", Toast.LENGTH_SHORT).show(); // informacja dla uzytkownika ze nie wybrano urzadzenia BT
+                    return;
+                } else {
+                    BluetoothDevice device = ((MyAdapter) (listView.getAdapter())).getSelectedItem();
+                    Intent intent = new Intent(getApplicationContext(), ControlActivity.class);
+                    intent.putExtra(DEVICE_EXTRA, device);
+                    intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
+                    startActivity(intent); // uruchamianie aktywnosci szklarni z przekazaniem informacji o urzadzeniu BT z ktorym ma sie polaczyc (z Arduino)
+                }
             }
         });
 
@@ -150,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 MyAdapter adapter = (MyAdapter) listView.getAdapter();
                 adapter.replaceItems(listDevices);
             } else {
-                msg("Nie znaleziono sparowanych urzadzen Bluetooth, najpierw sparuj telefon z Arduino!");
+                msg("Nie znaleziono sparowanych urzadzen Bluetooth, najpierw sparuj telefon z robotem!");
             }
         }
 
@@ -191,6 +196,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public long getItemId(int position) {
             return position;
+        }
+
+        public int getSelectedIndex() {
+            return selectedIndex;
         }
 
         private class ViewHolder {

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +45,8 @@ public class ControlActivity extends AppCompatActivity {
 
         Intent intent = getIntent(); //pobranie danych z intencji ktora uruchomila tą aktywnosc
         Bundle b = intent.getExtras();
-        mDevice = b.getParcelable(MainActivity.DEVICE_EXTRA); //urzadzenie BT z ktorym sie laczymy
-        mDeviceUUID = UUID.fromString(b.getString(MainActivity.DEVICE_UUID)); //identyfkator urzadzenia
+        mDevice = b.getParcelable(ConnectActivity.DEVICE_EXTRA); //urzadzenie BT z ktorym sie laczymy
+        mDeviceUUID = UUID.fromString(b.getString(ConnectActivity.DEVICE_UUID)); //identyfkator urzadzenia
 
         distanceFront = (TextView) findViewById(R.id.frontSensorDistanceTextView); //powiazania pol tekstowych w pliku xml z kodem java
         distanceRight = (TextView) findViewById(R.id.rightSensorDistanceTextView);
@@ -69,7 +69,6 @@ public class ControlActivity extends AppCompatActivity {
                 if (skret <= -100) skret = -99;
                 if (predkosc >= 100) predkosc = 99;
                 if (predkosc <= -100) predkosc = -99;
-                ;
                 komenda = new Komenda(predkosc, skret);
                 System.out.print(komenda);
                 if (commandFilter.isRecommendedToSendCommand(komenda)) {
@@ -122,16 +121,21 @@ public class ControlActivity extends AppCompatActivity {
                         final String strInput = new String(buffer, 0, i);
 
                         String[] informacje = strInput.split(";"); // parsowanie danych z bufora
+                        Log.d("ReadInput", String.format("informacje[%d]: %s", informacje.length, strInput));
 
-                        runOnUiThread(new Runnable() { // wywołanie funkcji do modyfikacji widoku aktywnosci z innego watku (tego watku)
-                            @Override
-                            public void run() { // aktualizacja kątów manipulatora wyświetlanych w aplikacji
-                                distanceFront.setText(informacje[0] + "cm");
-                                distanceRight.setText(informacje[1] + "cm");
-                                distanceRear.setText(informacje[2] + "cm");
-                                distanceLeft.setText(informacje[3] + "cm");
-                            }
-                        });
+                        if(informacje.length == 5) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    distanceFront.setText(informacje[0] + " cm");
+                                    distanceRight.setText(informacje[1] + " cm");
+//                                    distanceRear.setText(informacje[2]);
+                                    distanceLeft.setText(informacje[3] + " cm");
+                                }
+                            });
+                        } else if(informacje.length < 5) {
+                            Log.d("ReadInputError", String.format("informacje[%d]: %s", informacje.length, strInput));
+                        }
                     }
                     Thread.sleep(200);
                 }
@@ -237,10 +241,10 @@ public class ControlActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             if (!mConnectSuccessful) {
-                msg("Nie udało się połączyć z Arduino :(");
+                msg("Nie udało się połączyć z robotem :(");
                 finish();
             } else {
-                msg("Połączono z Arduino!");
+                msg("Połączono z robotem!");
                 mIsBluetoothConnected = true;
                 mReadThread = new ReadInput(); // Kick off input reader
             }
