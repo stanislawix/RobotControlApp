@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ public class ControlActivity extends AppCompatActivity {
     private boolean mIsBluetoothConnected = false;
 
     private TextView distanceFront, distanceRight, distanceRear, distanceLeft;
+    private TextView speedScaleHeader, speedScaleMeter;
+    private SeekBar speedScaleSlider;
     private JoystickView joystick;
 
     private ProgressDialog progressDialog;
@@ -53,10 +56,31 @@ public class ControlActivity extends AppCompatActivity {
         distanceRear = (TextView) findViewById(R.id.rearSensorDistanceTextView);
         distanceLeft = (TextView) findViewById(R.id.leftSensorDistanceTextView);
 
+        speedScaleHeader = (TextView) findViewById(R.id.speedScaleHeader);
+        speedScaleMeter = (TextView) findViewById(R.id.speedScaleMeter);
+        speedScaleSlider = (SeekBar) findViewById(R.id.speedScaleSlider);
+
         joystick = (JoystickView) findViewById(R.id.joystickView);
         joystick.setFixedCenter(true);
 
         commandFilter = new CommandFilter(300L);
+
+        speedScaleSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (i <= 0) {
+                    speedScaleMeter.setText("WYŁ.");
+                } else {
+                    speedScaleMeter.setText(String.valueOf(i));
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
 
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
@@ -69,6 +93,7 @@ public class ControlActivity extends AppCompatActivity {
                 if (skret <= -100) skret = -99;
                 if (predkosc >= 100) predkosc = 99;
                 if (predkosc <= -100) predkosc = -99;
+                predkosc = predkosc * speedScaleSlider.getProgress() / 10; //TODO: zmienic na cos lepszego
                 komenda = new Komenda(predkosc, skret);
                 System.out.print(komenda);
                 if (commandFilter.isRecommendedToSendCommand(komenda)) {
@@ -129,7 +154,7 @@ public class ControlActivity extends AppCompatActivity {
                                 public void run() {
                                     distanceFront.setText(informacje[0] + " cm");
                                     distanceRight.setText(informacje[1] + " cm");
-//                                    distanceRear.setText(informacje[2]);
+                                    distanceRear.setText(informacje[2] + " cm");
                                     distanceLeft.setText(informacje[3] + " cm");
                                 }
                             });
@@ -141,9 +166,7 @@ public class ControlActivity extends AppCompatActivity {
                 }
 
                 // obsługa wyjątków
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -155,11 +178,10 @@ public class ControlActivity extends AppCompatActivity {
 
     }
 
-    private class DisConnectBT extends AsyncTask<Void, Void, Void> {
+    private class DisconnectBT extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected void onPreExecute() {
-        }
+        protected void onPreExecute() {}
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -198,7 +220,7 @@ public class ControlActivity extends AppCompatActivity {
     @Override
     protected void onPause() { //pauza aktywnosci - rozlaczenie z arduino
         if (mBTSocket != null && mIsBluetoothConnected) {
-            new DisConnectBT().execute();
+            new DisconnectBT().execute();
         }
         super.onPause();
     }
@@ -246,7 +268,7 @@ public class ControlActivity extends AppCompatActivity {
             } else {
                 msg("Połączono z robotem!");
                 mIsBluetoothConnected = true;
-                mReadThread = new ReadInput(); // Kick off input reader
+//                mReadThread = new ReadInput(); // Kick off input reader
             }
 
             progressDialog.dismiss();

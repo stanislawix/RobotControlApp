@@ -41,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:text="0 cm"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/joystickView"
         app:layout_constraintEnd_toEndOf="@+id/joystickView"
         app:layout_constraintStart_toStartOf="@+id/joystickView" />
@@ -51,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="0 cm"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/joystickView"
         app:layout_constraintEnd_toEndOf="@+id/joystickView"
         app:layout_constraintTop_toTopOf="@+id/joystickView"
@@ -59,12 +61,12 @@
     <TextView
         android:id="@+id/rearSensorDistanceTextView"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:text="0 cm"
-        app:layout_constraintEnd_toEndOf="@+id/joystickView"
-        app:layout_constraintStart_toStartOf="@+id/joystickView"
-        app:layout_constraintTop_toBottomOf="@+id/joystickView"
-        android:visibility="gone"/>
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/joystickView" />
 
     <TextView
         android:id="@+id/leftSensorDistanceTextView"
@@ -72,9 +74,45 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="0 cm"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/joystickView"
         app:layout_constraintStart_toStartOf="@+id/joystickView"
         app:layout_constraintTop_toTopOf="@+id/joystickView"
         app:layout_constraintVertical_bias="0.3" />
+
+    <SeekBar
+        android:id="@+id/speedScaleSlider"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:max="10"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/frontSensorDistanceTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/speedScaleHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="SKALOWANIE PRĘDKOŚCI"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/speedScaleSlider"
+        app:layout_constraintStart_toStartOf="@+id/speedScaleSlider" />
+
+    <TextView
+        android:id="@+id/speedScaleMeter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="WYŁ."
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/speedScaleSlider"
+        app:layout_constraintEnd_toEndOf="@+id/speedScaleSlider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
